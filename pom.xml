@@ -1,0 +1,258 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<groupId>org.arakhne.tinymas</groupId>
+	<artifactId>tinymas</artifactId>
+	<packaging>pom</packaging>
+	<version>6.7</version>
+	<name>TinyMAS Multiagent Platform</name>
+	<inceptionYear>2003</inceptionYear>
+	<url>http://www.arakhne.org/tinymas/</url>
+
+	<properties>
+		<tinymas.version>6.7</tinymas.version>
+		<afc.version>10.0</afc.version>
+		<year>2013</year>
+		<copyrighters>Arakhn&amp;ecirc;.org Members</copyrighters>
+		<sourceEncoding>UTF-8</sourceEncoding>
+	</properties>
+
+	<!-- ======================================= -->
+	<!-- ==== Dependencies === -->
+	<!-- ======================================= -->
+
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.arakhne.afc.core</groupId>
+				<artifactId>references</artifactId>
+				<version>${afc.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.arakhne.tinymas</groupId>
+				<artifactId>kernel</artifactId>
+				<version>${tinymas.version}</version>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+
+	<!-- ======================================= -->
+	<!-- ==== Project Information === -->
+	<!-- ======================================= -->
+
+	<modules>
+		<module>kernel</module>
+		<module>demos</module>
+	</modules>
+
+	<licenses>
+		<license>
+			<name>GNU Lesser General Public License v3.0</name>
+			<url>http://www.gnu.org/licenses/lgpl.html</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
+
+	<mailingLists>
+		<mailingList>
+			<name>dev@arakhne.org</name>
+			<subscribe>mailto:dev-request@arakhne.org</subscribe>
+			<unsubscribe>mailto:dev-request@arakhne.org</unsubscribe>
+			<post>mailto:dev@arakhne.org</post>
+		</mailingList>
+	</mailingLists>
+
+	<!-- ======================================= -->
+	<!-- ==== Organization Information === -->
+	<!-- ======================================= -->
+
+	<organization>
+		<name>Arakhnê.org Project</name>
+		<url>http://www.arakhne.org</url>
+	</organization>
+
+	<developers>
+		<developer>
+			<id>galland</id>
+			<name>St&amp;eacute;phane GALLAND</name>
+			<email>galland@arakhne.org</email>
+			<url>http://www.arakhne.org/homes/galland.html</url>
+			<roles>
+				<role>Founder</role>
+				<role>Architect</role>
+				<role>Developer</role>
+			</roles>
+		</developer>
+		<developer>
+			<id>gaud</id>
+			<name>Nicolas GAUD</name>
+			<email>gaud@arakhne.org</email>
+			<url>http://www.arakhne.org/homes/gaud.html</url>
+			<roles>
+				<role>Developer</role>
+			</roles>
+		</developer>
+	</developers>
+
+	<!-- ======================================= -->
+	<!-- ==== Devel Configuration === -->
+	<!-- ======================================= -->
+
+	<distributionManagement>
+		<repository>
+			<id>repository.arakhne.org</id>
+			<name>Arakhn&amp;ecirc; Repository</name>
+			<url>file:///srv/arakhne.org/repository/maven/</url>
+		</repository>
+		<site>
+			<id>afc.site.arakhne.org</id>
+			<name>AFC Project Websites Repository</name>
+			<url>file:///srv/arakhne.org/web/maven-sites/</url>
+		</site>
+	</distributionManagement>
+
+	<scm>
+		<connection>scm:git:git://github.com/gallandarakhneorg/tinymas.git</connection>
+		<developerConnection>scm:git:https://github.com/gallandarakhneorg/tinymas.git</developerConnection>
+	</scm>
+
+	<build>
+		<pluginManagement>
+			<plugins>
+				<plugin>
+					<groupId>org.arakhne.afc.maven</groupId>
+					<artifactId>tag-replacer</artifactId>
+					<version>${afc.version}</version>
+				</plugin>
+				<plugin>
+					<groupId>org.arakhne.afc.maven</groupId>
+					<artifactId>license-installer</artifactId>
+					<version>${afc.version}</version>
+				</plugin>
+
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-source-plugin</artifactId>
+					<version>2.2.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-compiler-plugin</artifactId>
+					<version>3.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<!-- no the version 2.4 because it is incompatible with m2e -->
+					<version>2.3.2</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.8.1</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-plugin-plugin</artifactId>
+					<version>3.2</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>2.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.6</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.16</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.3</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-javadoc-plugin</artifactId>
+					<version>2.9.1</version>
+				</plugin>
+			</plugins>
+		</pluginManagement>
+		<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-compiler-plugin</artifactId>
+				<configuration>
+					<target>1.6</target>
+					<source>1.6</source>
+					<encoding>${sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-resources-plugin</artifactId>
+				<configuration>
+					<encoding>${sourceEncoding}</encoding>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-javadoc-plugin</artifactId>
+				<configuration>
+					<docencoding>${sourceEncoding}</docencoding>
+					<show>package</show>
+					<detectLinks>true</detectLinks>
+					<detectJavaApiLink>true</detectJavaApiLink>
+					<docfilessubdirs>true</docfilessubdirs>
+					<bottom>&lt;small&gt;Copyright &amp;copy;
+						${project.inceptionYear}-${year} ${copyrighters}.
+						All rights
+						reserved under LGPL license
+						terms.&lt;/small&gt;</bottom>
+					<tags>
+						<tag>
+							<name>mavengroupid</name>
+							<placement>pt</placement>
+							<head>Maven Group Id:</head>
+						</tag>
+						<tag>
+							<name>mavenartifactid</name>
+							<placement>pt</placement>
+							<head>Maven Artifact Id:</head>
+						</tag>
+					</tags>
+				</configuration>
+			</plugin>
+		</plugins>
+	</build>
+
+	<!-- ======================================= -->
+	<!-- ==== Repositories === -->
+	<!-- ======================================= -->
+
+	<repositories>
+		<repository>
+			<id>org.arakhne-maven</id>
+			<name>Arakhn&amp;ecirc; Maven Repository</name>
+			<url>http://download.tuxfamily.org/arakhne/maven/</url>
+		</repository>
+	</repositories>
+	<pluginRepositories>
+		<pluginRepository>
+			<id>org.arakhne-maven</id>
+			<name>Arakhn&amp;ecirc; Maven Repository</name>
+			<url>http://download.tuxfamily.org/arakhne/maven/</url>
+			<snapshots>
+				<enabled>true</enabled>
+			</snapshots>
+		</pluginRepository>
+	</pluginRepositories>
+
+</project>
