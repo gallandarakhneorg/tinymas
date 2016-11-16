@@ -24,6 +24,7 @@ import io.sarl.core.InnerContextAccess;
 import io.sarl.core.Lifecycle;
 import io.sarl.core.Logging;
 import io.sarl.core.Schedules;
+import io.sarl.core.Time;
 import io.sarl.eventdispatching.BehaviorGuardEvaluator;
 import io.sarl.eventdispatching.BehaviorGuardEvaluatorRegistry;
 import io.sarl.lang.core.Address;
@@ -59,6 +60,7 @@ class TMSarlAgent extends org.arakhne.tinyMAS.core.Agent implements EventListene
 	private SchedulesSkill scheduleSkill;
 	private ExternalContextAccessSkill externContextSkill;
 	private InnerContextAccessSkill innerContextSkill;
+	private TimeSkill timeSkill;
 	
 	public TMSarlAgent(TMDefaultSpace defaultSpace, io.sarl.lang.core.Agent sarlAgent, Object[] parameters) {
 		super();
@@ -135,6 +137,7 @@ class TMSarlAgent extends org.arakhne.tinyMAS.core.Agent implements EventListene
 		this.scheduleSkill = new SchedulesSkill();
 		this.externContextSkill = new ExternalContextAccessSkill();
 		this.innerContextSkill = new InnerContextAccessSkill();
+		this.timeSkill = new TimeSkill();
 		
 		try {
 			Method method = io.sarl.lang.core.Agent.class.getDeclaredMethod("setSkill", Class.class, Skill.class); //$NON-NLS-1$
@@ -148,6 +151,7 @@ class TMSarlAgent extends org.arakhne.tinyMAS.core.Agent implements EventListene
 				method.invoke(getSarlAgent(), Schedules.class, this.scheduleSkill);
 				method.invoke(getSarlAgent(), ExternalContextAccess.class, this.externContextSkill);
 				method.invoke(getSarlAgent(), InnerContextAccess.class, this.innerContextSkill);
+				method.invoke(getSarlAgent(), Time.class, this.timeSkill);
 			} finally {
 				method.setAccessible(isAcc);
 			}
@@ -189,6 +193,7 @@ class TMSarlAgent extends org.arakhne.tinyMAS.core.Agent implements EventListene
 			boolean isAcc = method.isAccessible();
 			try {
 				method.setAccessible(true);
+				method.invoke(getSarlAgent(), Time.class);
 				method.invoke(getSarlAgent(), InnerContextAccess.class);
 				method.invoke(getSarlAgent(), ExternalContextAccess.class);
 				method.invoke(getSarlAgent(), Schedules.class);
@@ -716,4 +721,30 @@ class TMSarlAgent extends org.arakhne.tinyMAS.core.Agent implements EventListene
 		
 	}
 
+	private class TimeSkill extends Skill implements Time {
+
+		TimeSkill() {
+			//
+		}
+
+		@Override
+		public double getTime(TimeUnit timeUnit) {
+			if (timeUnit == null) {
+				timeUnit = TimeUnit.SECONDS;
+			}
+			return TMSarlAgent.this.getSimulationTime(timeUnit);
+		}
+
+		@Override
+		public double getTime() {
+			return getTime(null);
+		}
+
+		@Override
+		public double getOSTimeFactor() {
+			return TMSarlAgent.this.getSimulationStepDuration(TimeUnit.SECONDS);
+		}
+
+	}
+	
 }
