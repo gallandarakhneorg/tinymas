@@ -9,7 +9,7 @@ CAUTION: TinyMAS is no more under development. A large amount of its source code
 
 == tinyMAS: a SARL Run-time Environment
 
-SARL is a general-purpose agent-oriented language. SARL aims at providing the fundamental abstractions for dealing with concurrency, distribution, interaction, decentralization, reactivity, autonomy and dynamic reconfiguration. These high-level features are now considered as the major requirements for an easy and practical implementation of modern complex software applications.
+link:http://www.sarl.io[SARL] is a general-purpose agent-oriented language. SARL aims at providing the fundamental abstractions for dealing with concurrency, distribution, interaction, decentralization, reactivity, autonomy and dynamic reconfiguration. These high-level features are now considered as the major requirements for an easy and practical implementation of modern complex software applications.
 
 A SARL Run-time Environment (SRE) executes or interprets compiled SARL code on an "hardware platform." A module of tinyMAS was written to make it a SRE.
 The tinyMAS SRE does not support all the elements of the SARL metamodel. Indeed the support for external contexts and inner contexts is not implemented.
