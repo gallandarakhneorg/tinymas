@@ -56,8 +56,20 @@ public class KernelAdapter implements KernelListener {
 
 	/** Invoked when an agent was removed from the kernel.
 	 */
+	public void kernelAgentRemoved(Kernel<?,?,?,?> kernel, Agent agent, AgentIdentifier id) {
+		kernelAgentRemoved(kernel, id);
+	}
+
+	/** Invoked when an agent was removed from the kernel.
+	 */
 	public void kernelAgentRemoved(Kernel<?,?,?,?> kernel, AgentIdentifier... id) {
 		//
+	}
+
+	/** Invoked when an agent was added inside the kernel.
+	 */
+	public void kernelAgentAdded(Kernel<?,?,?,?> kernel, Agent agent, AgentIdentifier id) {
+		kernelAgentAdded(kernel, id);
 	}
 
 	/** Invoked when an agent was added inside the kernel.

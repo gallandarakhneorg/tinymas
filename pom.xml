@@ -6,17 +6,18 @@
 	<groupId>org.arakhne.tinymas</groupId>
 	<artifactId>tinymas</artifactId>
 	<packaging>pom</packaging>
-	<version>6.7</version>
+	<version>7.0-SNAPSHOT</version>
 	<name>TinyMAS Multiagent Platform</name>
 	<inceptionYear>2003</inceptionYear>
 	<url>http://www.arakhne.org/tinymas/</url>
 
 	<properties>
-		<tinymas.version>6.7</tinymas.version>
-		<afc.version>10.0</afc.version>
-		<year>2013</year>
+		<tinymas.version>7.0-SNAPSHOT</tinymas.version>
+		<afc.version>14.0-SNAPSHOT</afc.version>
+		<year>2015</year>
 		<copyrighters>Arakhn&amp;ecirc;.org Members</copyrighters>
 		<sourceEncoding>UTF-8</sourceEncoding>
+		<compiler.level>1.8</compiler.level>
 	</properties>
 
 	<!-- ======================================= -->
@@ -28,6 +29,11 @@
 			<dependency>
 				<groupId>org.arakhne.afc.core</groupId>
 				<artifactId>references</artifactId>
+				<version>${afc.version}</version>
+			</dependency>
+			<dependency>
+				<groupId>org.arakhne.afc.core</groupId>
+				<artifactId>vmutils</artifactId>
 				<version>${afc.version}</version>
 			</dependency>
 			<dependency>
@@ -45,6 +51,8 @@
 	<modules>
 		<module>kernel</module>
 		<module>demos</module>
+		<module>sarl</module>
+		<module>sarl-demos</module>
 	</modules>
 
 	<licenses>
@@ -135,53 +143,47 @@
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-source-plugin</artifactId>
-					<version>2.2.1</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-compiler-plugin</artifactId>
-					<version>3.1</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-jar-plugin</artifactId>
-					<!-- no the version 2.4 because it is incompatible with m2e -->
-					<version>2.3.2</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-deploy-plugin</artifactId>
-					<version>2.8.1</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-plugin-plugin</artifactId>
-					<version>3.2</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-assembly-plugin</artifactId>
 					<version>2.4</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-resources-plugin</artifactId>
-					<version>2.6</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-surefire-plugin</artifactId>
-					<version>2.16</version>
-				</plugin>
-				<plugin>
-					<groupId>org.apache.maven.plugins</groupId>
-					<artifactId>maven-site-plugin</artifactId>
+					<artifactId>maven-compiler-plugin</artifactId>
 					<version>3.3</version>
 				</plugin>
 				<plugin>
 					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-jar-plugin</artifactId>
+					<version>2.6</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-deploy-plugin</artifactId>
+					<version>2.8.2</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-assembly-plugin</artifactId>
+					<version>2.6</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-resources-plugin</artifactId>
+					<version>2.7</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-surefire-plugin</artifactId>
+					<version>2.19</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
+					<artifactId>maven-site-plugin</artifactId>
+					<version>3.4</version>
+				</plugin>
+				<plugin>
+					<groupId>org.apache.maven.plugins</groupId>
 					<artifactId>maven-javadoc-plugin</artifactId>
-					<version>2.9.1</version>
+					<version>2.10.3</version>
 				</plugin>
 			</plugins>
 		</pluginManagement>
@@ -190,8 +192,8 @@
 				<groupId>org.apache.maven.plugins</groupId>
 				<artifactId>maven-compiler-plugin</artifactId>
 				<configuration>
-					<target>1.6</target>
-					<source>1.6</source>
+					<target>${compiler.level}</target>
+					<source>${compiler.level}</source>
 					<encoding>${sourceEncoding}</encoding>
 				</configuration>
 			</plugin>

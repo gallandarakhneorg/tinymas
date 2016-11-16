@@ -6,7 +6,7 @@
 	<parent>
 		<groupId>org.arakhne.tinymas</groupId>
 		<artifactId>tinymas</artifactId>
-		<version>6.7</version>
+		<version>7.0-SNAPSHOT</version>
 	</parent>
 
 	<artifactId>demos</artifactId>

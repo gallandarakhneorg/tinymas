@@ -48,7 +48,15 @@ public interface KernelListener {
 
 	/** Invoked when an agent was removed from the kernel.
 	 */
+	public void kernelAgentRemoved(Kernel<?,?,?,?> kernel, Agent agent, AgentIdentifier id);
+
+	/** Invoked when an agent was removed from the kernel.
+	 */
 	public void kernelAgentRemoved(Kernel<?,?,?,?> kernel, AgentIdentifier... id);
+
+	/** Invoked when an agent was added inside the kernel.
+	 */
+	public void kernelAgentAdded(Kernel<?,?,?,?> kernel, Agent agent, AgentIdentifier id);
 
 	/** Invoked when an agent was added inside the kernel.
 	 */

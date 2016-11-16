@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	<modelVersion>4.0.0</modelVersion>
+
+	<parent>
+		<groupId>org.arakhne.tinymas</groupId>
+		<artifactId>tinymas</artifactId>
+		<version>7.0-SNAPSHOT</version>
+	</parent>
+
+	<artifactId>sarl</artifactId>
+	<name>SARL+TinyMAS Multiagent Platform</name>
+	
+	<properties>
+		<sarl.version>0.5.0-SNAPSHOT</sarl.version>
+		<cliRunnerMainClass>org.arakhne.tinyMAS.core.Boot</cliRunnerMainClass>
+	</properties>
+
+	<dependencies>
+		<dependency>
+			<groupId>org.arakhne.tinymas</groupId>
+			<artifactId>kernel</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>io.sarl.maven</groupId>
+			<artifactId>io.sarl.maven.sdk</artifactId>
+			<version>${sarl.version}</version>
+		</dependency>
+	</dependencies>
+
+	<build>
+		<plugins>
+			<plugin>
+				<!-- to create a jar with all dependencies -->
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-assembly-plugin</artifactId>
+				<configuration>
+					<descriptors>
+						<descriptor>with-dependencies.xml</descriptor>
+					</descriptors>
+				</configuration>
+				<executions>
+					<execution>
+						<id>make-assembly</id>
+						<phase>package</phase>
+						<goals>
+							<goal>attached</goal>
+						</goals>
+					</execution>
+				</executions>
+			</plugin>
+			<plugin>
+				<groupId>io.sarl.maven</groupId>
+				<artifactId>io.sarl.maven.sre</artifactId>
+				<version>${sarl.version}</version>
+				<configuration>
+					<sreName>TinyMAS</sreName>
+					<commandLineOptions>
+						<hideInfo></hideInfo>
+						<hideLogo></hideLogo>
+						<showInfo></showInfo>
+						<showLogo></showLogo>
+						<defaultContextId></defaultContextId>
+						<randomContextId></randomContextId>
+						<bootAgentContextId></bootAgentContextId>
+						<offline></offline>
+						<embedded></embedded>
+						<noMoreOption></noMoreOption>
+					</commandLineOptions>
+					<mainClass>${cliRunnerMainClass}</mainClass>
+				</configuration>
+
+				<executions>
+					<execution>
+						<id>update-manifest-standard</id>
+						<goals>
+							<goal>updatemanifest</goal>
+						</goals>
+						<configuration>
+							<standaloneSRE>false</standaloneSRE>
+							<archiveFinalNames>
+								<name>${project.artifactId}-${project.version}</name>
+							</archiveFinalNames>
+						</configuration>
+					</execution>
+					<execution>
+						<id>update-manifest-standalone</id>
+						<goals>
+							<goal>updatemanifest</goal>
+						</goals>
+						<configuration>
+							<standaloneSRE>true</standaloneSRE>
+							<archiveFinalNames>
+								<name>${project.artifactId}-${project.version}-with-dependencies</name>
+							</archiveFinalNames>
+						</configuration>
+					</execution>
+				</executions>
+
+			</plugin>
+		</plugins>
+	</build>
+
+</project>

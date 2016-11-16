@@ -318,7 +318,7 @@ public class Kernel<AT extends Agent, ET extends Environment<AT>, YP extends Yel
 			}
 			if (!this.__stopsimu) {
 				a.start(id);
-				fireAgentAdded(id);
+				fireAgentAdded(agent, id);
 			}			
 		}
 	}
@@ -344,7 +344,7 @@ public class Kernel<AT extends Agent, ET extends Environment<AT>, YP extends Yel
 			}
 			if (!this.__stopsimu) {
 				a.start(id);
-				fireAgentAdded(id);
+				fireAgentAdded(a, id);
 			}			
 		}
 	}
@@ -372,19 +372,6 @@ public class Kernel<AT extends Agent, ET extends Environment<AT>, YP extends Yel
 	 */
 	void removeAgent(AgentIdentifier id) {
 		assert(id!=null);
-		removeAgent(id,true);
-	}
-
-	/** Kill an agent.
-	 * <p>
-	 * The agent will be removed immediately.
-	 * 
-	 * @param id
-	 * @param notify must be <code>true</code> to notify the listeners.
-	 * @see #killAgent(AgentIdentifier)
-	 */
-	private void removeAgent(AgentIdentifier id, boolean notify) {
-		assert(id!=null);
 		if (this.__environment!=null) {
 			this.__environment.removeAgent(id);
 		}
@@ -395,8 +382,8 @@ public class Kernel<AT extends Agent, ET extends Environment<AT>, YP extends Yel
 		if (ag != null) {
 			if (!this.__in_shutdowning) ag.stop() ;
 		}
-		if ((!this.__stopsimu)&&(notify)) {
-			fireAgentRemoved(id);
+		if (!this.__stopsimu) {
+			fireAgentRemoved(ag, id);
 		}
 	}
 	
@@ -405,10 +392,7 @@ public class Kernel<AT extends Agent, ET extends Environment<AT>, YP extends Yel
 	void removeAllAgents() {
 		AgentIdentifier[] ags = this.__whitepages.getAllAgentIdentifiers() ;
 		for (AgentIdentifier identifier : ags) {
-			removeAgent(identifier,false);
-		}
-		if (!this.__stopsimu) {
-			fireAgentRemoved(ags);
+			removeAgent(identifier);
 		}
 	}
 
@@ -898,22 +882,24 @@ public class Kernel<AT extends Agent, ET extends Environment<AT>, YP extends Yel
 
 	/** Informs listener about the addition of an agent.
 	 */
-	private void fireAgentAdded(AgentIdentifier... ids) {
-		assert(ids!=null);
+	private void fireAgentAdded(Agent agent, AgentIdentifier id) {
+		assert(agent!=null);
+		assert(id!=null);
 		for (KernelListener listener : this.__kernelListeners) {
 			if (listener!=null) {
-				listener.kernelAgentAdded(this,ids);
+				listener.kernelAgentAdded(this, agent, id);
 			}
 		}
 	}
 
 	/** Informs listener about the deletion of an agent.
 	 */
-	private void fireAgentRemoved(AgentIdentifier... ids) {
-		assert(ids!=null);
+	private void fireAgentRemoved(Agent agent, AgentIdentifier id) {
+		assert(agent!=null);
+		assert(id!=null);
 		for (KernelListener listener : this.__kernelListeners) {
 			if (listener!=null) {
-				listener.kernelAgentRemoved(this,ids);
+				listener.kernelAgentRemoved(this, agent, id);
 			}
 		}
 	}
