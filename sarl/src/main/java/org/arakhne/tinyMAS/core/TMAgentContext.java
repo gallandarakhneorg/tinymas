@@ -27,12 +27,12 @@ import java.util.UUID;
 import org.eclipse.xtext.xbase.lib.Pure;
 
 import io.sarl.lang.core.AgentContext;
+import io.sarl.lang.core.EventSpaceSpecification;
 import io.sarl.lang.core.Space;
 import io.sarl.lang.core.SpaceSpecification;
 import io.sarl.lang.util.SynchronizedCollection;
 import io.sarl.util.Collections3;
 
-@SuppressWarnings("deprecation")
 class TMAgentContext implements AgentContext {
 
 	public static final UUID TINYMAS_AGENT_CONTEXT_ID = UUID.fromString("cdb0d568-4059-40cf-96c4-d078fee91cb1"); //$NON-NLS-1$
@@ -63,11 +63,14 @@ class TMAgentContext implements AgentContext {
 		return Collections3.synchronizedCollection(Collections.singleton(this.defaultSpace), this);
 	}
 
+	@SuppressWarnings("unchecked")
 	@Override
 	@Pure
 	public <S extends Space> SynchronizedCollection<S> getSpaces(Class<? extends SpaceSpecification<S>> spec) {
-		//XXX: Not implemented
-		throw new UnsupportedOperationException();
+		if (spec != null && spec.equals(EventSpaceSpecification.class)) {
+			return Collections3.synchronizedCollection(Collections.singleton((S) this.defaultSpace), this);
+		}
+		return Collections3.synchronizedCollection(Collections.emptyList(), this);
 	}
 
 	@Override
@@ -102,7 +105,7 @@ class TMAgentContext implements AgentContext {
 	@Override
 	@Pure
 	public <S extends Space> S getSpace(UUID spaceUUID) {
-		if (spaceUUID.equals(this.defaultSpace.getID().getID())) {
+		if (spaceUUID.equals(this.defaultSpace.getSpaceID().getID())) {
 			return (S) this.defaultSpace;
 		}
 		return null;
