@@ -35,7 +35,7 @@ import io.sarl.lang.core.BuiltinCapacitiesProvider;
 final class Spawner {
 
 	public static UUID spawn(
-			Boot kernel,
+			Kernel kernel,
 			TMDefaultSpace defaultSpace, 
 			Class<? extends io.sarl.lang.core.Agent> aAgent,
 			UUID parentID, UUID agentID,
