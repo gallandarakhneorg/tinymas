@@ -49,9 +49,9 @@ final class Spawner {
 		return null;
 	}
 
-	@SuppressWarnings("unchecked")
+	@SuppressWarnings({ "unchecked", "rawtypes" })
 	public static void spawn(
-			Boot kernel,
+			Kernel kernel,
 			TMSarlAgent agent) {
 		assert kernel != null;
 		assert agent != null;
