@@ -607,15 +607,7 @@ class TMSarlAgent extends org.arakhne.tinyMAS.core.Agent implements EventListene
 
 		@Override
 		public AgentTask execute(AgentTask task, Procedure1<? super Agent> procedure) {
-			AgentTask theTask = task;
-			if (theTask == null) {
-				theTask = new Task();
-				theTask.setName(UUID.randomUUID().toString());
-			}
-			long time = (long) (getSimulationTime(TimeUnit.MILLISECONDS) + getSimulationStepDuration(TimeUnit.MILLISECONDS));
-			theTask.setProcedure(procedure);
-			scheduleTask(time, theTask);
-			return theTask;
+			return in(task, (long) getSimulationStepDuration(TimeUnit.MILLISECONDS), procedure);
 		}
 		
 	}
