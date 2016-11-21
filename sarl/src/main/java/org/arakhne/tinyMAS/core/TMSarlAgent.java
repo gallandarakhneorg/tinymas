@@ -28,6 +28,7 @@ import io.sarl.core.Time;
 import io.sarl.eventdispatching.BehaviorGuardEvaluator;
 import io.sarl.eventdispatching.BehaviorGuardEvaluatorRegistry;
 import io.sarl.lang.core.Address;
+import io.sarl.lang.core.Agent;
 import io.sarl.lang.core.AgentContext;
 import io.sarl.lang.core.Behavior;
 import io.sarl.lang.core.Event;
@@ -585,6 +586,34 @@ class TMSarlAgent extends org.arakhne.tinyMAS.core.Agent implements EventListene
 			if (theTask instanceof Task) {
 				((Task) theTask).setPeriod(period);
 			}
+			scheduleTask(time, theTask);
+			return theTask;
+		}
+
+		@Override
+		public AgentTask atFixedDelay(long delay, Procedure1<? super Agent> procedure) {
+			return atFixedDelay(null, delay, procedure);
+		}
+
+		@Override
+		public AgentTask atFixedDelay(AgentTask task, long delay, Procedure1<? super Agent> procedure) {
+			return every(task, delay, procedure);
+		}
+
+		@Override
+		public AgentTask execute(Procedure1<? super Agent> procedure) {
+			return execute(null, procedure);
+		}
+
+		@Override
+		public AgentTask execute(AgentTask task, Procedure1<? super Agent> procedure) {
+			AgentTask theTask = task;
+			if (theTask == null) {
+				theTask = new Task();
+				theTask.setName(UUID.randomUUID().toString());
+			}
+			long time = (long) (getSimulationTime(TimeUnit.MILLISECONDS) + getSimulationStepDuration(TimeUnit.MILLISECONDS));
+			theTask.setProcedure(procedure);
 			scheduleTask(time, theTask);
 			return theTask;
 		}
