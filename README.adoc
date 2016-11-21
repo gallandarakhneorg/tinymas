@@ -13,3 +13,5 @@ link:http://www.sarl.io[SARL] is a general-purpose agent-oriented language. SARL
 
 A SARL Run-time Environment (SRE) executes or interprets compiled SARL code on an "hardware platform." A module of tinyMAS was written to make it a SRE.
 The tinyMAS SRE does not support all the elements of the SARL metamodel. Indeed the support for external contexts and inner contexts is not implemented.
+
+A short tutorial in available of the SARL website for creating a SRE with the tinyMAS platform: http://www.sarl.io/docs/suite/io/sarl/docs/tutorials/CreatingASARLRunTimeEnvironmentForTheTinyMASPlatformSpec.html
