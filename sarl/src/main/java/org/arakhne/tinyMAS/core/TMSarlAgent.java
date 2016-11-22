@@ -34,6 +34,7 @@ import io.sarl.lang.core.Behavior;
 import io.sarl.lang.core.Event;
 import io.sarl.lang.core.EventListener;
 import io.sarl.lang.core.EventSpace;
+import io.sarl.lang.core.EventSpaceSpecification;
 import io.sarl.lang.core.Scope;
 import io.sarl.lang.core.Skill;
 import io.sarl.lang.core.Space;
@@ -425,6 +426,8 @@ class TMSarlAgent extends org.arakhne.tinyMAS.core.Agent implements EventListene
 
 		private List<Object> unregistrationWaiters = new ArrayList<>();
 
+		private Address innerAddress;
+
 		BehaviorsSkill() {
 			//
 		}
@@ -471,7 +474,23 @@ class TMSarlAgent extends org.arakhne.tinyMAS.core.Agent implements EventListene
 		
 		@Override
 		public void wake(Event evt) {
-			asEventListener().receiveEvent(evt);
+			wake(evt, null);
+		}
+		
+		private Address getInnerAddress() {
+			if (this.innerAddress == null) {
+				final UUID myId = getID();
+				final SpaceID spaceId = new SpaceID(myId, UUID.randomUUID(), EventSpaceSpecification.class);
+				this.innerAddress = new Address(spaceId, myId);
+			}
+			return this.innerAddress;
+		}
+
+		@Override
+		public void wake(Event evt, Scope<Address> scope) {
+			if (scope == null || scope.matches(getInnerAddress())) { 
+				asEventListener().receiveEvent(evt);
+			}
 		}
 
 		@Override
