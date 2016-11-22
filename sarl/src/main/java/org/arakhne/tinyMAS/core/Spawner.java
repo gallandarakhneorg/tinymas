@@ -25,6 +25,8 @@ import java.lang.reflect.Constructor;
 import java.util.UUID;
 
 import io.sarl.lang.core.BuiltinCapacitiesProvider;
+import io.sarl.sarlspecification.SarlSpecificationChecker;
+import io.sarl.sarlspecification.StandardSarlSpecificationChecker;
 
 /**
  * Spawner.
@@ -33,6 +35,8 @@ import io.sarl.lang.core.BuiltinCapacitiesProvider;
  */
 @SuppressWarnings({"deprecation"})
 final class Spawner {
+
+	private static final SarlSpecificationChecker SPECIFICATION_CHECKER = new StandardSarlSpecificationChecker();
 
 	public static UUID spawn(
 			Kernel kernel,
@@ -67,7 +71,8 @@ final class Spawner {
 		assert defaultSpace != null;
 		assert aAgent != null;
 		assert parentID != null;
-		if (io.sarl.lang.core.Agent.class.isAssignableFrom(aAgent)) {
+		if (io.sarl.lang.core.Agent.class.isAssignableFrom(aAgent)
+				&& SPECIFICATION_CHECKER.isValidSarlElement(aAgent)) {
 			final UUID theAgentID = (agentID == null) ? UUID.randomUUID() : agentID;
 			try {
 				Constructor<? extends io.sarl.lang.core.Agent> cons = ((Class<? extends io.sarl.lang.core.Agent>) aAgent).getConstructor(
