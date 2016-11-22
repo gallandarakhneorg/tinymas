@@ -473,6 +473,16 @@ class TMSarlAgent extends org.arakhne.tinyMAS.core.Agent implements EventListene
 		}
 		
 		@Override
+		public boolean hasRegisteredBehavior() {
+			return !this.behaviors.isEmpty();
+		}
+
+		@Override
+		public Collection<Behavior> getRegisteredBehaviors() {
+			return new ArrayList<>(this.behaviors);
+		}
+
+		@Override
 		public void wake(Event evt) {
 			wake(evt, null);
 		}
@@ -497,7 +507,7 @@ class TMSarlAgent extends org.arakhne.tinyMAS.core.Agent implements EventListene
 		public EventListener asEventListener() {
 			return TMSarlAgent.this;
 		}
-		
+
 	}
 
 	private class SchedulesSkill extends Skill implements Schedules {
