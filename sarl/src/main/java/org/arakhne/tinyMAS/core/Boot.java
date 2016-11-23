@@ -84,6 +84,7 @@ public class Boot extends Kernel {
 		if (io.sarl.lang.core.Agent.class.isAssignableFrom(agentType)) {
 			Spawner.spawn(kernel, defaultSpace,
 					(Class<? extends io.sarl.lang.core.Agent>) agentType,
+					null,
 					TMDefaultSpace.TINYMAS_DEFAULT_SPACE_ID,
 					null,
 					params);

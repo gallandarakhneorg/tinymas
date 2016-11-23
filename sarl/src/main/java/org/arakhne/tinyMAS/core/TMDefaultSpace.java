@@ -72,8 +72,8 @@ class TMDefaultSpace implements EventSpace {
 		return this.context.get();
 	}
 	
-	public UUID spawn(Class<? extends io.sarl.lang.core.Agent> aAgent, UUID agentID, Object... params) {
-		final TMSarlAgent agent = Spawner.createAgent(this, aAgent, TINYMAS_DEFAULT_SPACE_ID, agentID, params);
+	public UUID spawn(Class<? extends io.sarl.lang.core.Agent> aAgent, UUID spawnerID, UUID agentID, Object... params) {
+		final TMSarlAgent agent = Spawner.createAgent(this, aAgent, spawnerID, TINYMAS_DEFAULT_SPACE_ID, agentID, params);
 		this.agentToLaunch.add(agent);
 		return agent.getID();
 	}

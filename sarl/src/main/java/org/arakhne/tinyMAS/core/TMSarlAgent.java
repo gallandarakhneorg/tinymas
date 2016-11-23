@@ -55,6 +55,8 @@ class TMSarlAgent extends org.arakhne.tinyMAS.core.Agent implements EventListene
 
 	private Object[] parameters;
 
+	private UUID spawnerID;
+
 	private BehaviorsSkill behaviorSkill;
 	private LoggingSkill loggingSkill;
 	private DefaultContextInteractionsSkill spaceSkill;
@@ -64,10 +66,11 @@ class TMSarlAgent extends org.arakhne.tinyMAS.core.Agent implements EventListene
 	private InnerContextAccessSkill innerContextSkill;
 	private TimeSkill timeSkill;
 	
-	public TMSarlAgent(TMDefaultSpace defaultSpace, io.sarl.lang.core.Agent sarlAgent, Object[] parameters) {
+	public TMSarlAgent(TMDefaultSpace defaultSpace, io.sarl.lang.core.Agent sarlAgent, UUID spawnerID, Object[] parameters) {
 		super();
 		this.sarlAgent = sarlAgent;
 		this.defaultSpace = new WeakReference<>(defaultSpace);
+		this.spawnerID = spawnerID;
 		this.parameters = parameters;
 	}
 	
@@ -161,11 +164,9 @@ class TMSarlAgent extends org.arakhne.tinyMAS.core.Agent implements EventListene
 			throw new Error(e);
 		}
 
-		final Initialize initializeEvent = new Initialize();
-		if (this.parameters != null) {
-			initializeEvent.parameters = this.parameters;
-			this.parameters = null;
-		}
+		final Initialize initializeEvent = new Initialize(this.spawnerID, this.parameters);
+		this.spawnerID = null;
+		this.parameters = null;
 		receiveEvent(initializeEvent);
 	}
 	
@@ -288,7 +289,7 @@ class TMSarlAgent extends org.arakhne.tinyMAS.core.Agent implements EventListene
 
 		@Override
 		public UUID spawn(Class<? extends io.sarl.lang.core.Agent> aAgent, Object... params) {
-			return TMSarlAgent.this.getDefaultSpace().spawn(aAgent, null, params);
+			return TMSarlAgent.this.getDefaultSpace().spawn(aAgent, getOwner().getID(), null, params);
 		}
 
 		@Override
@@ -312,7 +313,7 @@ class TMSarlAgent extends org.arakhne.tinyMAS.core.Agent implements EventListene
 		public UUID spawnInContext(Class<? extends io.sarl.lang.core.Agent> agentClass, AgentContext context,
 				Object... params) {
 			if (context.getID().equals(TMSarlAgent.this.getDefaultSpace().getAgentContext().getID())) {
-				return TMSarlAgent.this.getDefaultSpace().spawn(agentClass, null, params);
+				return TMSarlAgent.this.getDefaultSpace().spawn(agentClass, getOwner().getID(), null, params);
 			}
 			return null;
 		}
@@ -321,7 +322,7 @@ class TMSarlAgent extends org.arakhne.tinyMAS.core.Agent implements EventListene
 		public UUID spawnInContextWithID(Class<? extends io.sarl.lang.core.Agent> agentClass, UUID agentID,
 				AgentContext context, Object... params) {
 			if (context.getID().equals(TMSarlAgent.this.getDefaultSpace().getAgentContext().getID())) {
-				return TMSarlAgent.this.getDefaultSpace().spawn(agentClass, agentID, params);
+				return TMSarlAgent.this.getDefaultSpace().spawn(agentClass, getOwner().getID(), agentID, params);
 			}
 			return null;
 		}

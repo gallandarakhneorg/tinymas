@@ -42,10 +42,10 @@ final class Spawner {
 			Kernel kernel,
 			TMDefaultSpace defaultSpace, 
 			Class<? extends io.sarl.lang.core.Agent> aAgent,
-			UUID parentID, UUID agentID,
+			UUID spawnerID, UUID parentID, UUID agentID,
 			Object... params) {
 		assert kernel != null;
-		TMSarlAgent agent = createAgent(defaultSpace, aAgent, parentID, agentID, params);
+		TMSarlAgent agent = createAgent(defaultSpace, aAgent, spawnerID, parentID, agentID, params);
 		if (agent != null) {
 			spawn(kernel, agent);
 			return agent.getID();
@@ -66,7 +66,7 @@ final class Spawner {
 	public static TMSarlAgent createAgent(
 			TMDefaultSpace defaultSpace, 
 			Class<? extends io.sarl.lang.core.Agent> aAgent,
-			UUID parentID, UUID agentID,
+			UUID spawnerID, UUID parentID, UUID agentID,
 			Object... params) {
 		assert defaultSpace != null;
 		assert aAgent != null;
@@ -78,7 +78,7 @@ final class Spawner {
 				Constructor<? extends io.sarl.lang.core.Agent> cons = ((Class<? extends io.sarl.lang.core.Agent>) aAgent).getConstructor(
 						BuiltinCapacitiesProvider.class, UUID.class, UUID.class);
 				io.sarl.lang.core.Agent sarlAgent = cons.newInstance(null, parentID, theAgentID);
-				TMSarlAgent tmAgent = new TMSarlAgent(defaultSpace, sarlAgent, params);
+				TMSarlAgent tmAgent = new TMSarlAgent(defaultSpace, sarlAgent, spawnerID, params);
 				return tmAgent;
 			} catch (Exception ex) {
 				//
